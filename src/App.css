@@ -29,6 +29,10 @@
   width: 100%;
 }
 
+.input-name{
+  width: 11vw;
+}
+
 
 .bigger-input{
   width: 85%;
@@ -97,11 +101,12 @@ table tr td {
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
+  width: 255px;
+  height: 200px;
   width: 25px;
   height: 25px;
   border-radius: 50%;
   background: #4CAF50;
-  cursor: pointer;
 }
 
 .slider::-moz-range-thumb {
