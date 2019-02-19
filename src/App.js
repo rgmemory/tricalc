@@ -31,8 +31,10 @@ class App extends Component {
       elapsedRunDisplayMinutes: 0,
       elapsedRunDisplaySeconds: 0,
 
-      // elapsedT1DisplaySeconds:0,
-      // elapsedT1DisplaySeconds:0,
+      elapsedT1Total: 0,
+      elapsedBikeTotal: 0,
+      elapsedT2Total: 0,
+      elapsedRunTotal: 0,
 
       swimInputDistance: 4224,
       swimSliderDistance: 2.4,
@@ -47,6 +49,10 @@ class App extends Component {
       swimSliderSeconds: 0,
 
       swimTimeSeconds: null,
+      bikeTimeSeconds: null,
+      runTimeSeconds: null,
+      t1TimeSeconds: null,
+      t2TimeSeconds: null,
 
       t1InputSeconds: 0,
 
@@ -63,7 +69,6 @@ class App extends Component {
       bikeOutputMinutes: null,
       bikeOutputSeconds: null,
 
-      bikeTimeSeconds: null,
 
       t2OutputMinutes: null,
       t2OutputSeconds: null,
@@ -80,8 +85,22 @@ class App extends Component {
     };
   }
 
-  // componentDidUpdate(){
-  //   this.calcSwimTime(this.state.swimInputDistance, this.state.swimInputPace);
+
+  // componentWillUpdate(prevProps, prevState){
+  //   // this.calcSwimTime(this.state.swimInputDistance, this.state.swimInputPace)
+
+  //   if(prevState.t1TimeSeconds !== this.state.t1TimeSeconds){
+  //     console.log('t1 time changed')
+  //     this.state.updateElapsedBikeSeconds(
+  //       this.state.elapsedSwimSeconds,
+  //       this.sate.elapsedT1Seconds,
+  //       this.state.elapsedBikeSeconds,
+  //       this.state.elapsedT2Seconds,
+  //       this.state.elapsedRunSeconds
+  //     );
+  //   }else{
+  //     console.log('t1 time stayed the same')
+  //   }
   // }
 
   //swim//////////////////////////////////////////////////////////////////
@@ -163,10 +182,15 @@ class App extends Component {
       elapsedSwimSeconds: swimTimeSeconds
     });
 
-    // this.calcElapsedSwimTime(swimTimeSeconds, this.state.elapsedBikeSeconds, this.state.elapsedRunSeconds, this.state.elapsedT1Seconds, this.state.elapsedT2Seconds)
-    // this.calcElapsedSwimTime(swimTimeSeconds, this.state.elapsedBikeSeconds, this.state.elapsedRunSeconds, this.state.elapsedT1Seconds, this.state.elapsedT2Seconds)
-
     this.swimSecondsConverter(swimTimeSeconds);
+
+    this.updateElapsedSwimSeconds(
+      swimTimeSeconds,
+      this.state.elapsedT1Seconds,
+      this.state.elapsedBikeSeconds,
+      this.state.elapsedT2Seconds,
+      this.state.elapsedRunSeconds
+    );
   };
 
   ///////////////////////////////////////////////////////////////// t1
@@ -189,10 +213,17 @@ class App extends Component {
     this.setState({
       t1OutputMinutes: minutes,
       t1OutputSeconds: value,
-      elapsedT1Seconds: elapsed
+      elapsedT1Seconds: elapsed,
+      t1TimeSeconds: value
     });
 
-    this.updateElapsedT1Seconds(this.state.elapsedSwimSeconds, elapsed);
+    this.updateElapsedT1Seconds(
+      this.state.elapsedSwimSeconds,
+      elapsed,
+      this.state.elapsedBikeSeconds,
+      this.state.elapsedT2Seconds,
+      this.state.elapsedRunSeconds
+    );
   };
 
   //  ///////////////////////////////////////////////////////////////// Bike
@@ -219,25 +250,21 @@ class App extends Component {
     let tempSeconds = (miles / mph) * 3600;
     tempSeconds = Math.round((miles / mph) * 3600);
 
-    console.log("bike seconds", tempSeconds);
 
     this.bikeSecondsConverter(tempSeconds);
 
     this.setState({
       bikeTimeSeconds: tempSeconds,
-      elapsedBikeSeconds: tempSeconds
+      elapsedBikeSeconds: tempSeconds,
+      bikeTimeSeconds: tempSeconds
     });
 
-    // this.calcElapsedTime(this.state.elapsedSwimSeconds, tempSeconds, this.state.elapsedRunSeconds, this.state.elapsedT1Seconds, this.state.elapsedT2Seconds)
-    console.log(
-      this.state.elapsedSwimSeconds,
-      this.state.elapsedT1Seconds,
-      tempSeconds
-    );
     this.updateElapsedBikeSeconds(
       this.state.elapsedSwimSeconds,
       this.state.elapsedT1Seconds,
-      tempSeconds
+      tempSeconds,
+      this.state.elapsedT2Seconds,
+      this.state.elapsedRunSeconds
     );
   };
 
@@ -287,16 +314,16 @@ class App extends Component {
     this.setState({
       t2OutputMinutes: minutes,
       t2OutputSeconds: value,
-      elapsedT2Seconds: elapsed
+      elapsedT2Seconds: elapsed,
+      t2TimeSeconds: value
     });
-
-    // this.calcElapsedTime(this.state.elapsedSwimSeconds, this.state.elapsedBikeSeconds, this.state.elapsedRunSeconds, this.state.elapsedT1Seconds, elapsed)
 
     this.updateElapsedT2Seconds(
       this.state.elapsedSwimSeconds,
       this.state.elapsedT1Seconds,
       this.state.elapsedBikeSeconds,
-      elapsed
+      elapsed,
+      this.state.elapsedRunSeconds
     );
   };
 
@@ -311,7 +338,6 @@ class App extends Component {
 
     this.calcRunTime(this.state.runInputPace, tempRunDistance);
 
-    // this.calcRunTime
   };
 
   updateRunInputPace = value => {
@@ -369,35 +395,48 @@ class App extends Component {
       elapsedRunSeconds: elapsed,
       runOutputHours: hours,
       runOutputMinutes: minutes,
-      runOutputSeconds: value
+      runOutputSeconds: value,
+      runTimeSeconds: value
     });
 
-    // this.calcElapsedFinalTime(this.state.elapsedSwimSeconds, this.state.elapsedBikeSeconds, elapsed, this.state.elapsedT1Seconds, this.state.elapsedT2Seconds)
-    this.updateElapsedRunSeconds(this.state.elapsedT2Seconds, elapsed);
+    this.updateElapsedRunSeconds(
+      this.state.elapsedSwimSeconds,
+      this.state.elapsedT1Seconds,
+      this.state.elapsedBikeSeconds,
+      this.state.elapsedT2Seconds,
+      elapsed
+    );
   };
 
-  updateElapsedT1Seconds = (swim, t1) => {
+  updateElapsedSwimSeconds = (swim, t1, bike, t2, run) => {
     t1 = parseInt(t1);
+    t2 = parseInt(t2);
 
-    console.log(swim, t1);
+    let temp = swim + t1 + bike + t2 + run
+    console.log(swim, t1, bike, t2, run, temp);
+
+    this.setState({
+      elapsedSwimSeconds: swim
+    });
+  };
+
+  updateElapsedT1Seconds = (swim, t1, bike, t2, run) => {
+    t1 = parseInt(t1);
+    t2 = parseInt(t2);
+
+    
 
     let temp = swim + t1;
+    console.log(swim, t1, bike, t2, run, temp);
 
     let value = temp;
 
-    console.log(temp);
-
-    this.setState({
-      elapsedT1Seconds: temp
-    });
-
-    let hours = 0;
     let minutes = 0;
+    let hours = 0;
     if (value / 60 >= 60) {
       hours = Math.floor(value / 60 / 60);
       value -= 3600 * hours;
     }
-
     if (value >= 60) {
       minutes = Math.floor(value / 60);
       if (minutes < 10) {
@@ -410,33 +449,29 @@ class App extends Component {
     }
 
     this.setState({
+      elapsedT1Total: temp,
       elapsedT1DisplayHours: hours,
       elapsedT1DisplayMinutes: minutes,
       elapsedT1DisplaySeconds: value
     });
   };
 
-  updateElapsedBikeSeconds = (swim, t1, bike) => {
+  updateElapsedBikeSeconds = (swim, t1, bike, t2, run) => {
     t1 = parseInt(t1);
+    t2 = parseInt(t2);
 
-    let temp = t1 + bike;
+    let temp = swim + t1 + bike;
+
+    console.log(swim, t1, bike, t2, run, temp);
 
     let value = temp;
 
-    console.log(swim, t1, bike, temp);
-    // console.log()
-
-    this.setState({
-      elapsedBikeSeconds: temp
-    });
-
-    let hours = 0;
     let minutes = 0;
+    let hours = 0;
     if (value / 60 >= 60) {
       hours = Math.floor(value / 60 / 60);
       value -= 3600 * hours;
     }
-
     if (value >= 60) {
       minutes = Math.floor(value / 60);
       if (minutes < 10) {
@@ -449,35 +484,81 @@ class App extends Component {
     }
 
     this.setState({
+      elapsedBikeTotal: temp,
       elapsedBikeDisplayHours: hours,
       elapsedBikeDisplayMinutes: minutes,
       elapsedBikeDisplaySeconds: value
     });
   };
 
-  updateElapsedT2Seconds = (swim, t1, bike, t2) => {
+  updateElapsedT2Seconds = (swim, t1, bike, t2, run) => {
     t1 = parseInt(t1);
     t2 = parseInt(t2);
 
-    let temp = bike + t2;
+    let temp = swim + t1 + bike + t2;
 
-    console.log(swim, t1, bike, t2);
+    console.log(swim, t1, bike, t2, run, temp);
+
+    let value = temp;
+
+    let minutes = 0;
+    let hours = 0;
+    if (value / 60 >= 60) {
+      hours = Math.floor(value / 60 / 60);
+      value -= 3600 * hours;
+    }
+    if (value >= 60) {
+      minutes = Math.floor(value / 60);
+      if (minutes < 10) {
+        minutes = `0${minutes}`;
+      }
+      value -= minutes * 60;
+      if (value < 10) {
+        value = `0${value}`;
+      }
+    }
+
+    
 
     this.setState({
-      elapsedT2Seconds: temp
+      elapsedT2Total: temp,
+      elapsedT2DisplayHours: hours,
+      elapsedT2DisplayMinutes: minutes,
+      elapsedT2DisplaySeconds: value
     });
   };
 
-  updateElapsedRunSeconds = (t2, run) => {
-    // t1 = parseInt(t1)
+  updateElapsedRunSeconds = (swim, t1, bike, t2, run) => {
+    t1 = parseInt(t1);
     t2 = parseInt(t2);
 
-    let temp = run + t2;
+    let temp = swim + t1 + bike + t2 + run;
+    console.log(swim, t1, bike, t2, run, temp);
 
-    console.log(t2, run, temp);
+    let value = temp;
+
+    let minutes = 0;
+    let hours = 0;
+    if (value / 60 >= 60) {
+      hours = Math.floor(value / 60 / 60);
+      value -= 3600 * hours;
+    }
+    if (value >= 60) {
+      minutes = Math.floor(value / 60);
+      if (minutes < 10) {
+        minutes = `0${minutes}`;
+      }
+      value -= minutes * 60;
+      if (value < 10) {
+        value = `0${value}`;
+      }
+    }
 
     this.setState({
-      elapsedRunSeconds: temp
+      elapsedRunTotal: temp,
+      elapsedRunDisplayHours: hours,
+      elapsedRunDisplayMinutes: minutes,
+      elapsedRunDisplaySeconds: value
     });
   };
 
@@ -611,7 +692,6 @@ class App extends Component {
                     max="810"
                     onChange={e => this.updateRunInputPace(e.target.value)}
                   />
-                  {/* {this.state.runOutputHours} */}
                   {this.state.runSliderMinutes}:{this.state.runSliderSeconds}
                 </td>
               </tr>
@@ -637,6 +717,7 @@ class App extends Component {
                   {this.state.swimOutputSeconds}
                 </td>
                 <td>
+                  {this.state.elapsedSwimSeconds}-----------
                   {this.state.swimOutputHours}:{this.state.swimOutputMinutes}:
                   {this.state.swimOutputSeconds}
                 </td>
@@ -648,6 +729,7 @@ class App extends Component {
                   {this.state.t1OutputMinutes}:{this.state.t1OutputSeconds}
                 </td>
                 <td>
+                  {this.state.elapsedT1Total}-----------
                   {this.state.elapsedT1DisplayHours}:
                   {this.state.elapsedT1DisplayMinutes}:
                   {this.state.elapsedT1DisplaySeconds}
@@ -661,6 +743,7 @@ class App extends Component {
                   {this.state.bikeOutputSeconds}
                 </td>
                 <td>
+                  {this.state.elapsedBikeTotal}-----------
                   {this.state.elapsedBikeDisplayHours}:
                   {this.state.elapsedBikeDisplayMinutes}:
                   {this.state.elapsedBikeDisplaySeconds}
@@ -672,7 +755,12 @@ class App extends Component {
                 <td>
                   {this.state.t2OutputMinutes}:{this.state.t2OutputSeconds}
                 </td>
-                <td>{this.state.elapsedT2Seconds}</td>
+                <td>
+                  {this.state.elapsedT2Total}-----------
+                  {this.state.elapsedT2DisplayHours}:
+                  {this.state.elapsedT2DisplayMinutes}:
+                  {this.state.elapsedT2DisplaySeconds}
+                </td>
                 <td />
               </tr>
               <tr>
@@ -681,7 +769,12 @@ class App extends Component {
                   {this.state.runOutputHours}:{this.state.runOutputMinutes}:
                   {this.state.runOutputSeconds}
                 </td>
-                <td>{this.state.elapsedRunSeconds}</td>
+                <td>
+                  {this.state.elapsedRunTotal}-----------
+                  {this.state.elapsedRunDisplayHours}:
+                  {this.state.elapsedRunDisplayMinutes}:
+                  {this.state.elapsedRunDisplaySeconds}
+                </td>
                 <td />
               </tr>
             </table>
