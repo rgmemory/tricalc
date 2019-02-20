@@ -62,7 +62,7 @@ class App extends Component {
       t1OutputMinutes: 3,
       t1OutputSeconds: 20,
 
-      bikeInputDistance: 10,
+      bikeInputDistance: 112,
       bikeInputSpeed: 14,
 
       bikeOutputHours: 0,
@@ -72,7 +72,7 @@ class App extends Component {
       t2OutputMinutes: 3,
       t2OutputSeconds: 20,
 
-      runInputDistance: 3.1,
+      runInputDistance: 26.2,
       runInputPace: 400,
 
       runSliderMinutes: `8`,
@@ -661,7 +661,7 @@ class App extends Component {
                       type="range"
                       min="1"
                       max="24"
-                      // value="0"
+                      // value="12"
                       onChange={e =>
                         this.updateSwimInputDistance(e.target.value)
                       }
@@ -679,7 +679,7 @@ class App extends Component {
                     <input
                       className="slider"
                       type="range"
-                      // value="0"
+                      // value="112"
                       min="10"
                       max="112"
                       onChange={e =>
@@ -699,7 +699,7 @@ class App extends Component {
                     <input
                       className="slider"
                       type="range"
-                      // value="0"
+                      // value={this.state.runInputDistance}
                       min="31"
                       max="262"
                       onChange={e =>

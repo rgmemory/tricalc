@@ -1,6 +1,6 @@
 .title{
   height: 6vh;
-  background-color: #ccc;
+  background-color: #8EB1D8;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,12 +32,12 @@
 
 .distances{
   /* border: solid black 1px; */
-  background-color: Lightblue;
+  /* background-color: Lightblue; */
   
 }
 
 .speeds{
-  background-color: Lightblue;
+  /* background-color: Lightblue; */
   width: 100%;
 }
 
@@ -101,15 +101,19 @@ table {
 
 table tr th {
   /* border: solid black 1px; */
-  background-color: #ccc;
+  background-color: #8EB1D8;
   width: 400px;
   /* color: black; */
-  text-align: left;
+  text-align: center;
+  /* display:  */
+  
 }
 
 table tr td {
   /* border: solid black 1px; */
   color: black;
+  text-align: center;
+
 }
 
 
@@ -124,7 +128,7 @@ table tr td {
 .slider {
   -webkit-appearance: none;
   width: 100%;
-  height: 15px;
+  height: 7px;
   border-radius: 5px;
   background: #d3d3d3;
   outline: none;
@@ -142,8 +146,8 @@ table tr td {
   appearance: none;
   width: 255px;
   height: 200px;
-  width: 25px;
-  height: 25px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   background: #326CA6;
 }
