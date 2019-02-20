@@ -16,20 +16,20 @@ class App extends Component {
       elapsedTotalSeconds: 0,
 
       elapsedT1DisplayHours: 0,
-      elapsedT1DisplayMinutes: 0,
-      elapsedT1DisplaySeconds: 0,
+      elapsedT1DisplayMinutes: `0${0}`,
+      elapsedT1DisplaySeconds: `0${0}`,
 
       elapsedBikeDisplayHours: 0,
-      elapsedBikeDisplayMinutes: 0,
-      elapsedBikeDisplaySeconds: 0,
+      elapsedBikeDisplayMinutes: `0${0}`,
+      elapsedBikeDisplaySeconds: `0${0}`,
 
       elapsedT2DisplayHours: 0,
-      elapsedT2DisplayMinutes: 0,
-      elapsedT2DisplaySeconds: 0,
+      elapsedT2DisplayMinutes: `0${0}`,
+      elapsedT2DisplaySeconds: `0${0}`,
 
       elapsedRunDisplayHours: 0,
-      elapsedRunDisplayMinutes: 0,
-      elapsedRunDisplaySeconds: 0,
+      elapsedRunDisplayMinutes: `0${0}`,
+      elapsedRunDisplaySeconds: `0${0}`,
 
       elapsedT1Total: 0,
       elapsedBikeTotal: 0,
@@ -42,11 +42,11 @@ class App extends Component {
       swimInputPace: 1,
 
       swimOutputHours: 0,
-      swimOutputMinutes: 0,
-      swimOutputSeconds: 0,
+      swimOutputMinutes: `0${0}`,
+      swimOutputSeconds: `0${0}`,
 
       swimSliderMinutes: 1,
-      swimSliderSeconds: 0,
+      swimSliderSeconds: `2${0}`,
 
       swimTimeSeconds: null,
       bikeTimeSeconds: null,
@@ -54,37 +54,35 @@ class App extends Component {
       t1TimeSeconds: null,
       t2TimeSeconds: null,
 
-      t1InputSeconds: 0,
+      t1InputSeconds: 200,
 
-      t1SliderMinutes: 0,
-      t1SliderSeconds: 0,
+      t1SliderMinutes: 3,
+      t1SliderSeconds: `0${0}`,
 
-      t1OutputMinutes: 0,
-      t1OutputSeconds: 0,
+      t1OutputMinutes: 3,
+      t1OutputSeconds: 20,
 
       bikeInputDistance: 10,
       bikeInputSpeed: 14,
 
-      bikeOutputHours: null,
-      bikeOutputMinutes: null,
-      bikeOutputSeconds: null,
+      bikeOutputHours: 0,
+      bikeOutputMinutes: `0${0}`,
+      bikeOutputSeconds: `0${0}`,
 
-
-      t2OutputMinutes: null,
-      t2OutputSeconds: null,
+      t2OutputMinutes: 3,
+      t2OutputSeconds: 20,
 
       runInputDistance: 3.1,
       runInputPace: 400,
 
-      runSliderMinutes: null,
-      runSliderSeconds: null,
+      runSliderMinutes: `8`,
+      runSliderSeconds: `0${0}`,
 
-      runOutputHours: null,
-      runOutputMinutes: null,
-      runOutputSeconds: null
+      runOutputHours: 0,
+      runOutputMinutes: `0${0}`,
+      runOutputSeconds: `0${0}`
     };
   }
-
 
   // componentWillUpdate(prevProps, prevState){
   //   // this.calcSwimTime(this.state.swimInputDistance, this.state.swimInputPace)
@@ -191,6 +189,35 @@ class App extends Component {
       this.state.elapsedT2Seconds,
       this.state.elapsedRunSeconds
     );
+
+    this.updateElapsedT1Seconds(
+      swimTimeSeconds,
+      this.state.elapsedT1Seconds,
+      this.state.elapsedBikeSeconds,
+      this.state.elapsedT2Seconds,
+      this.state.elapsedRunSeconds
+    );
+    this.updateElapsedBikeSeconds(
+      swimTimeSeconds,
+      this.state.elapsedT1Seconds,
+      this.state.elapsedBikeSeconds,
+      this.state.elapsedT2Seconds,
+      this.state.elapsedRunSeconds
+    );
+    this.updateElapsedT2Seconds(
+      swimTimeSeconds,
+      this.state.elapsedT1Seconds,
+      this.state.elapsedBikeSeconds,
+      this.state.elapsedT2Seconds,
+      this.state.elapsedRunSeconds
+    );
+    this.updateElapsedRunSeconds(
+      swimTimeSeconds,
+      this.state.elapsedT1Seconds,
+      this.state.elapsedBikeSeconds,
+      this.state.elapsedT2Seconds,
+      this.state.elapsedRunSeconds
+    );
   };
 
   ///////////////////////////////////////////////////////////////// t1
@@ -201,9 +228,9 @@ class App extends Component {
 
     if (value >= 60) {
       minutes = Math.floor(value / 60);
-      if (minutes < 10) {
-        minutes = `0${minutes}`;
-      }
+      // if (minutes < 10) {
+      //   minutes = minutes;
+      // }
       value -= minutes * 60;
       if (value < 10) {
         value = `0${value}`;
@@ -218,6 +245,27 @@ class App extends Component {
     });
 
     this.updateElapsedT1Seconds(
+      this.state.elapsedSwimSeconds,
+      elapsed,
+      this.state.elapsedBikeSeconds,
+      this.state.elapsedT2Seconds,
+      this.state.elapsedRunSeconds
+    );
+    this.updateElapsedBikeSeconds(
+      this.state.elapsedSwimSeconds,
+      elapsed,
+      this.state.elapsedBikeSeconds,
+      this.state.elapsedT2Seconds,
+      this.state.elapsedRunSeconds
+    );
+    this.updateElapsedT2Seconds(
+      this.state.elapsedSwimSeconds,
+      elapsed,
+      this.state.elapsedBikeSeconds,
+      this.state.elapsedT2Seconds,
+      this.state.elapsedRunSeconds
+    );
+    this.updateElapsedRunSeconds(
       this.state.elapsedSwimSeconds,
       elapsed,
       this.state.elapsedBikeSeconds,
@@ -250,7 +298,6 @@ class App extends Component {
     let tempSeconds = (miles / mph) * 3600;
     tempSeconds = Math.round((miles / mph) * 3600);
 
-
     this.bikeSecondsConverter(tempSeconds);
 
     this.setState({
@@ -266,9 +313,24 @@ class App extends Component {
       this.state.elapsedT2Seconds,
       this.state.elapsedRunSeconds
     );
+    this.updateElapsedT2Seconds(
+      this.state.elapsedSwimSeconds,
+      this.state.elapsedT1Seconds,
+      tempSeconds,
+      this.state.elapsedT2Seconds,
+      this.state.elapsedRunSeconds
+    );
+    this.updateElapsedRunSeconds(
+      this.state.elapsedSwimSeconds,
+      this.state.elapsedT1Seconds,
+      tempSeconds,
+      this.state.elapsedT2Seconds,
+      this.state.elapsedRunSeconds
+    );
   };
 
   bikeSecondsConverter = value => {
+    // console.log('bike seconds', value)
     let minutes = 0;
     let hours = 0;
     if (value / 60 >= 60) {
@@ -284,6 +346,9 @@ class App extends Component {
       if (value < 10) {
         value = `0${value}`;
       }
+    } else if (value === 0) {
+      minutes = `0${0}`;
+      value = `0${0}`;
     }
 
     this.setState({
@@ -302,9 +367,9 @@ class App extends Component {
 
     if (value >= 60) {
       minutes = Math.floor(value / 60);
-      if (minutes < 10) {
-        minutes = `0${minutes}`;
-      }
+      // if (minutes < 10) {
+      //   minutes = `0${minutes}`;
+      // }
       value -= minutes * 60;
       if (value < 10) {
         value = `0${value}`;
@@ -325,6 +390,13 @@ class App extends Component {
       elapsed,
       this.state.elapsedRunSeconds
     );
+    this.updateElapsedRunSeconds(
+      this.state.elapsedSwimSeconds,
+      this.state.elapsedT1Seconds,
+      this.state.elapsedBikeSeconds,
+      elapsed,
+      this.state.elapsedRunSeconds
+    );
   };
 
   /////////////////////////////
@@ -337,7 +409,6 @@ class App extends Component {
     });
 
     this.calcRunTime(this.state.runInputPace, tempRunDistance);
-
   };
 
   updateRunInputPace = value => {
@@ -354,9 +425,9 @@ class App extends Component {
 
     if (value >= 60) {
       minutes = Math.floor(value / 60);
-      if (minutes < 10) {
-        minutes = `0${minutes}`;
-      }
+      // if (minutes < 10) {
+      //   minutes = `0${minutes}`;
+      // }
       value -= minutes * 60;
       if (value < 10) {
         value = `0${value}`;
@@ -412,8 +483,8 @@ class App extends Component {
     t1 = parseInt(t1);
     t2 = parseInt(t2);
 
-    let temp = swim + t1 + bike + t2 + run
-    console.log(swim, t1, bike, t2, run, temp);
+    let temp = swim + t1 + bike + t2 + run;
+    // console.log(swim, t1, bike, t2, run, temp);
 
     this.setState({
       elapsedSwimSeconds: swim
@@ -424,10 +495,8 @@ class App extends Component {
     t1 = parseInt(t1);
     t2 = parseInt(t2);
 
-    
-
     let temp = swim + t1;
-    console.log(swim, t1, bike, t2, run, temp);
+    // console.log(swim, t1, bike, t2, run, temp);
 
     let value = temp;
 
@@ -462,7 +531,7 @@ class App extends Component {
 
     let temp = swim + t1 + bike;
 
-    console.log(swim, t1, bike, t2, run, temp);
+    // console.log(swim, t1, bike, t2, run, temp);
 
     let value = temp;
 
@@ -481,6 +550,9 @@ class App extends Component {
       if (value < 10) {
         value = `0${value}`;
       }
+    } else if (value === 0) {
+      minutes = `0${0}`;
+      value = `0${0}`;
     }
 
     this.setState({
@@ -497,7 +569,7 @@ class App extends Component {
 
     let temp = swim + t1 + bike + t2;
 
-    console.log(swim, t1, bike, t2, run, temp);
+    // console.log(swim, t1, bike, t2, run, temp);
 
     let value = temp;
 
@@ -516,9 +588,10 @@ class App extends Component {
       if (value < 10) {
         value = `0${value}`;
       }
+    } else if (value === 0) {
+      minutes = `0${0}`;
+      value = `0${0}`;
     }
-
-    
 
     this.setState({
       elapsedT2Total: temp,
@@ -533,7 +606,7 @@ class App extends Component {
     t2 = parseInt(t2);
 
     let temp = swim + t1 + bike + t2 + run;
-    console.log(swim, t1, bike, t2, run, temp);
+    // console.log(swim, t1, bike, t2, run, temp);
 
     let value = temp;
 
@@ -545,14 +618,20 @@ class App extends Component {
     }
     if (value >= 60) {
       minutes = Math.floor(value / 60);
-      if (minutes < 10) {
+      if (minutes < 10 && minutes > 0) {
         minutes = `0${minutes}`;
       }
+
       value -= minutes * 60;
-      if (value < 10) {
+      if ((value < 10) & (value > 0)) {
         value = `0${value}`;
       }
+    } else if (value === 0) {
+      minutes = `0${0}`;
+      value = `0${0}`;
     }
+
+    // console.log(hours, minutes, value)
 
     this.setState({
       elapsedRunTotal: temp,
@@ -566,135 +645,168 @@ class App extends Component {
     return (
       <div className="App">
         <div className="title">
-          <p>Title</p>
+          <p>Triathlon Calculator</p>
         </div>
         <div className="top">
           <div className="top-container">
             <table className="top-table">
-              <tr>
-                <td className="input-name">Swim Distance</td>
-                <td>
-                  <input
-                    className="slider"
-                    type="range"
-                    min="1"
-                    max="24"
-                    // value="0"
-                    onChange={e => this.updateSwimInputDistance(e.target.value)}
-                  />
-                  {this.state.swimSliderDistance}
-                </td>
-              </tr>
+              <div className="distances">
+                <tr className="row">
+                  <td className="input-name">
+                    <p>Swim Distance (Miles)</p>
+                  </td>
+                  <td className="input-slider">
+                    <input
+                      className="slider"
+                      type="range"
+                      min="1"
+                      max="24"
+                      // value="0"
+                      onChange={e =>
+                        this.updateSwimInputDistance(e.target.value)
+                      }
+                    />
+                    <div>{this.state.swimSliderDistance}</div>
+                  </td>
+                </tr>
 
-              <tr>
-                <td className="input-name">Swim Pace</td>
+                <tr className="row">
+                  <td className="input-name">
+                    <p>Bike Distance (Miles)</p>
+                  </td>
 
-                <td>
-                  <input
-                    className="slider"
-                    type="range"
-                    // value="0"
-                    min="80"
-                    max="198"
-                    onChange={e => this.swimSliderDisplay(e.target.value)}
-                  />
-                  {this.state.swimSliderMinutes}:{this.state.swimSliderSeconds}
-                </td>
-              </tr>
+                  <td className="input-slider">
+                    <input
+                      className="slider"
+                      type="range"
+                      // value="0"
+                      min="10"
+                      max="112"
+                      onChange={e =>
+                        this.updateBikeInputDistance(e.target.value)
+                      }
+                    />
+                    <div>{this.state.bikeInputDistance}</div>
+                  </td>
+                </tr>
 
-              <tr>
-                <td className="input-name">T1</td>
+                <tr className="row">
+                  <td className="input-name">
+                    <p>Run Distance (Miles)</p>
+                  </td>
 
-                <td>
-                  <input
-                    className="slider"
-                    type="range"
-                    // value="0"
-                    min="200"
-                    max="540"
-                    onChange={e => this.updatet1Time(e.target.value)}
-                  />
-                  {this.state.t1OutputMinutes}:{this.state.t1OutputSeconds}
-                </td>
-              </tr>
+                  <td className="input-slider">
+                    <input
+                      className="slider"
+                      type="range"
+                      // value="0"
+                      min="31"
+                      max="262"
+                      onChange={e =>
+                        this.updateRunInputDistance(e.target.value)
+                      }
+                    />
+                    {this.state.runInputDistance}
+                  </td>
+                </tr>
+              </div>
 
-              <tr>
-                <td className="input-name">Bike Distance</td>
+              <div className="speeds">
+                <tr className="row">
+                  <td className="input-name">
+                    <p>Swim Pace (Per 100 yards)</p>
+                  </td>
 
-                <td>
-                  <input
-                    className="slider"
-                    type="range"
-                    // value="0"
-                    min="10"
-                    max="112"
-                    onChange={e => this.updateBikeInputDistance(e.target.value)}
-                  />
-                  {this.state.bikeInputDistance}
-                </td>
-              </tr>
-              <tr>
-                <td className="input-name">Bike Speed</td>
+                  <td className="input-slider">
+                    <input
+                      className="slider"
+                      type="range"
+                      // value="0"
+                      min="80"
+                      max="198"
+                      onChange={e => this.swimSliderDisplay(e.target.value)}
+                    />
+                    {this.state.swimSliderMinutes}:
+                    {this.state.swimSliderSeconds}
+                  </td>
+                </tr>
 
-                <td>
-                  <input
-                    className="slider"
-                    type="range"
-                    // value="0"
-                    min="140"
-                    max="220"
-                    onChange={e => this.updateBikeInputSpeed(e.target.value)}
-                  />
-                  {this.state.bikeInputSpeed}
-                </td>
-              </tr>
+                <tr className="row">
+                  <td className="input-name">
+                    <p>Transition 1 (Minutes)</p>
+                  </td>
 
-              <tr>
-                <td className="input-name">T2</td>
+                  <td className="input-slider">
+                    <input
+                      className="slider"
+                      type="range"
+                      // value="0"
+                      min="200"
+                      max="540"
+                      onChange={e => this.updatet1Time(e.target.value)}
+                    />
+                    {this.state.t1OutputMinutes}:{this.state.t1OutputSeconds}
+                  </td>
+                </tr>
 
-                <td>
-                  <input
-                    className="slider"
-                    type="range"
-                    // value="0"
-                    min="140"
-                    max="540"
-                    onChange={e => this.updatet2Time(e.target.value)}
-                  />
-                  {this.state.t2OutputMinutes}:{this.state.t2OutputSeconds}
-                </td>
-              </tr>
+                <tr className="row">
+                  <td className="input-name">
+                    <p>Bike Speed (MPH)</p>
+                  </td>
 
-              <tr>
-                <td className="input-name">Run Distance</td>
+                  <td className="input-slider">
+                    <input
+                      className="slider"
+                      type="range"
+                      // value="0"
+                      min="140"
+                      max="220"
+                      onChange={e => this.updateBikeInputSpeed(e.target.value)}
+                    />
+                    {this.state.bikeInputSpeed}
+                  </td>
+                </tr>
 
-                <td>
-                  <input
-                    className="slider"
-                    type="range"
-                    // value="0"
-                    min="31"
-                    max="262"
-                    onChange={e => this.updateRunInputDistance(e.target.value)}
-                  />
-                  {this.state.runInputDistance}
-                </td>
-              </tr>
-              <tr>
-                <td className="input-name">Run Pace</td>
+                <tr className="row">
+                  <td className="input-name">
+                    <p>Transition 2 (Minutes)</p>
+                  </td>
 
-                <td>
-                  <input
-                    className="slider"
-                    type="range"
-                    // value="0"
-                    min="480"
-                    max="810"
-                    onChange={e => this.updateRunInputPace(e.target.value)}
-                  />
-                  {this.state.runSliderMinutes}:{this.state.runSliderSeconds}
-                </td>
-              </tr>
+                  <td className="input-slider">
+                    <input
+                      className="slider"
+                      type="range"
+                      // value="0"
+                      min="200"
+                      max="540"
+                      onChange={e => this.updatet2Time(e.target.value)}
+                    />
+                    {this.state.t2OutputMinutes}:{this.state.t2OutputSeconds}
+                  </td>
+                </tr>
+
+                <tr className="row">
+                  <td className="input-name">
+                    <p>Run Pace (Per mile)</p>
+                  </td>
+
+                  <td className="input-slider">
+                    <input
+                      className="slider"
+                      type="range"
+                      // value="0"
+                      min="480"
+                      max="810"
+                      onChange={e => this.updateRunInputPace(e.target.value)}
+                    />
+                    {this.state.runSliderMinutes}:{this.state.runSliderSeconds}
+                  </td>
+                </tr>
+              </div>
+
+                
+
+                
             </table>
           </div>
         </div>
@@ -704,73 +816,73 @@ class App extends Component {
         <div className="bottom">
           <div className="bottom-container">
             <table>
-              <tr>
+              <tr className="row">
                 <th>Event</th>
                 <th>Split</th>
                 <th>Elapsed</th>
                 <th>Clock</th>
               </tr>
-              <tr>
+              <tr className="row">
                 <td>Swim</td>
                 <td>
                   {this.state.swimOutputHours}:{this.state.swimOutputMinutes}:
                   {this.state.swimOutputSeconds}
                 </td>
                 <td>
-                  {this.state.elapsedSwimSeconds}-----------
+                  {/* {this.state.elapsedSwimSeconds}----------- */}
                   {this.state.swimOutputHours}:{this.state.swimOutputMinutes}:
                   {this.state.swimOutputSeconds}
                 </td>
                 <td />
               </tr>
-              <tr>
+              <tr className="row">
                 <td>T1</td>
                 <td>
                   {this.state.t1OutputMinutes}:{this.state.t1OutputSeconds}
                 </td>
                 <td>
-                  {this.state.elapsedT1Total}-----------
+                  {/* {this.state.elapsedT1Total}----------- */}
                   {this.state.elapsedT1DisplayHours}:
                   {this.state.elapsedT1DisplayMinutes}:
                   {this.state.elapsedT1DisplaySeconds}
                 </td>
                 <td />
               </tr>
-              <tr>
+              <tr className="row">
                 <td>Bike</td>
                 <td>
                   {this.state.bikeOutputHours}:{this.state.bikeOutputMinutes}:
                   {this.state.bikeOutputSeconds}
                 </td>
                 <td>
-                  {this.state.elapsedBikeTotal}-----------
+                  {/* {this.state.elapsedBikeTotal}----------- */}
                   {this.state.elapsedBikeDisplayHours}:
                   {this.state.elapsedBikeDisplayMinutes}:
                   {this.state.elapsedBikeDisplaySeconds}
                 </td>
                 <td />
               </tr>
-              <tr>
+              <tr className="row">
                 <td>T2</td>
                 <td>
                   {this.state.t2OutputMinutes}:{this.state.t2OutputSeconds}
                 </td>
                 <td>
-                  {this.state.elapsedT2Total}-----------
+                  {/* {this.state.elapsedT2Total}----------- */}
                   {this.state.elapsedT2DisplayHours}:
                   {this.state.elapsedT2DisplayMinutes}:
                   {this.state.elapsedT2DisplaySeconds}
                 </td>
                 <td />
               </tr>
-              <tr>
+              <tr className="row">
                 <td>Run</td>
                 <td>
                   {this.state.runOutputHours}:{this.state.runOutputMinutes}:
                   {this.state.runOutputSeconds}
                 </td>
                 <td>
-                  {this.state.elapsedRunTotal}-----------
+                  {/* {this.state.elapsedRunTotal}----------- */}
                   {this.state.elapsedRunDisplayHours}:
                   {this.state.elapsedRunDisplayMinutes}:
                   {this.state.elapsedRunDisplaySeconds}
