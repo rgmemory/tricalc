@@ -84,23 +84,6 @@ class App extends Component {
     };
   }
 
-  // componentWillUpdate(prevProps, prevState){
-  //   // this.calcSwimTime(this.state.swimInputDistance, this.state.swimInputPace)
-
-  //   if(prevState.t1TimeSeconds !== this.state.t1TimeSeconds){
-  //     console.log('t1 time changed')
-  //     this.state.updateElapsedBikeSeconds(
-  //       this.state.elapsedSwimSeconds,
-  //       this.sate.elapsedT1Seconds,
-  //       this.state.elapsedBikeSeconds,
-  //       this.state.elapsedT2Seconds,
-  //       this.state.elapsedRunSeconds
-  //     );
-  //   }else{
-  //     console.log('t1 time stayed the same')
-  //   }
-  // }
-
   //swim//////////////////////////////////////////////////////////////////
 
   swimSliderDisplay = value => {
@@ -228,9 +211,6 @@ class App extends Component {
 
     if (value >= 60) {
       minutes = Math.floor(value / 60);
-      // if (minutes < 10) {
-      //   minutes = minutes;
-      // }
       value -= minutes * 60;
       if (value < 10) {
         value = `0${value}`;
@@ -330,7 +310,6 @@ class App extends Component {
   };
 
   bikeSecondsConverter = value => {
-    // console.log('bike seconds', value)
     let minutes = 0;
     let hours = 0;
     if (value / 60 >= 60) {
@@ -367,9 +346,7 @@ class App extends Component {
 
     if (value >= 60) {
       minutes = Math.floor(value / 60);
-      // if (minutes < 10) {
-      //   minutes = `0${minutes}`;
-      // }
+
       value -= minutes * 60;
       if (value < 10) {
         value = `0${value}`;
@@ -425,9 +402,7 @@ class App extends Component {
 
     if (value >= 60) {
       minutes = Math.floor(value / 60);
-      // if (minutes < 10) {
-      //   minutes = `0${minutes}`;
-      // }
+
       value -= minutes * 60;
       if (value < 10) {
         value = `0${value}`;
@@ -484,7 +459,6 @@ class App extends Component {
     t2 = parseInt(t2);
 
     let temp = swim + t1 + bike + t2 + run;
-    // console.log(swim, t1, bike, t2, run, temp);
 
     this.setState({
       elapsedSwimSeconds: swim
@@ -496,7 +470,6 @@ class App extends Component {
     t2 = parseInt(t2);
 
     let temp = swim + t1;
-    // console.log(swim, t1, bike, t2, run, temp);
 
     let value = temp;
 
@@ -530,8 +503,6 @@ class App extends Component {
     t2 = parseInt(t2);
 
     let temp = swim + t1 + bike;
-
-    // console.log(swim, t1, bike, t2, run, temp);
 
     let value = temp;
 
@@ -569,8 +540,6 @@ class App extends Component {
 
     let temp = swim + t1 + bike + t2;
 
-    // console.log(swim, t1, bike, t2, run, temp);
-
     let value = temp;
 
     let minutes = 0;
@@ -606,7 +575,6 @@ class App extends Component {
     t2 = parseInt(t2);
 
     let temp = swim + t1 + bike + t2 + run;
-    // console.log(swim, t1, bike, t2, run, temp);
 
     let value = temp;
 
@@ -630,8 +598,6 @@ class App extends Component {
       minutes = `0${0}`;
       value = `0${0}`;
     }
-
-    // console.log(hours, minutes, value)
 
     this.setState({
       elapsedRunTotal: temp,
@@ -803,10 +769,6 @@ class App extends Component {
                   </td>
                 </tr>
               </div>
-
-                
-
-                
             </table>
           </div>
         </div>
@@ -829,7 +791,6 @@ class App extends Component {
                   {this.state.swimOutputSeconds}
                 </td>
                 <td>
-                  {/* {this.state.elapsedSwimSeconds}----------- */}
                   {this.state.swimOutputHours}:{this.state.swimOutputMinutes}:
                   {this.state.swimOutputSeconds}
                 </td>
@@ -841,7 +802,6 @@ class App extends Component {
                   {this.state.t1OutputMinutes}:{this.state.t1OutputSeconds}
                 </td>
                 <td>
-                  {/* {this.state.elapsedT1Total}----------- */}
                   {this.state.elapsedT1DisplayHours}:
                   {this.state.elapsedT1DisplayMinutes}:
                   {this.state.elapsedT1DisplaySeconds}
@@ -855,7 +815,6 @@ class App extends Component {
                   {this.state.bikeOutputSeconds}
                 </td>
                 <td>
-                  {/* {this.state.elapsedBikeTotal}----------- */}
                   {this.state.elapsedBikeDisplayHours}:
                   {this.state.elapsedBikeDisplayMinutes}:
                   {this.state.elapsedBikeDisplaySeconds}
@@ -868,7 +827,6 @@ class App extends Component {
                   {this.state.t2OutputMinutes}:{this.state.t2OutputSeconds}
                 </td>
                 <td>
-                  {/* {this.state.elapsedT2Total}----------- */}
                   {this.state.elapsedT2DisplayHours}:
                   {this.state.elapsedT2DisplayMinutes}:
                   {this.state.elapsedT2DisplaySeconds}
@@ -882,7 +840,6 @@ class App extends Component {
                   {this.state.runOutputSeconds}
                 </td>
                 <td>
-                  {/* {this.state.elapsedRunTotal}----------- */}
                   {this.state.elapsedRunDisplayHours}:
                   {this.state.elapsedRunDisplayMinutes}:
                   {this.state.elapsedRunDisplaySeconds}

@@ -1,124 +1,91 @@
-.title{
+.title {
   height: 6vh;
-  background-color: #8EB1D8;
+  background-color: #8eb1d8;
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: "Gill Sans", sans-serif;
 }
 
-.top{
+.top {
   padding-top: 10px;
-  /* border: solid orange 1px; */
   height: 53vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-color: #0CA7D3; */
   padding-bottom: 10px;
 }
 
-.top-container{
-  /* border: solid black 1px; */
-  /* height: 90%; */
+.top-container {
   width: 95vw;
-  
 }
 
-.top-table{
-  /* border: solid red 1px; */
+.top-table {
   width: 100%;
 }
 
-.distances{
-  /* border: solid black 1px; */
-  /* background-color: Lightblue; */
-  
-}
-
-.speeds{
-  /* background-color: Lightblue; */
+.speeds {
   width: 100%;
 }
 
-
-.row{
-
+.row {
   height: 6vh;
   width: 10vw;
-  /* border: solid black 1px; */
 }
 
-.input-name{
+.input-name {
   display: flex;
   justify-content: center;
-  
+
   height: 100%;
   width: 11vw;
-  /* border: solid black 1px; */
   width: 100%;
 }
 
-.input-name p{
-  /* border: solid green 1px; */
+.input-name p {
   font-family: "Gill Sans", sans-serif;
 
   margin: 0;
   padding: 0;
-  /* text-align: center; */
 }
 
-.input-slider{
-  /* background-color: green; */
+.input-slider {
   width: 95vw;
   display: flex;
-
 }
 
-
-.bigger-input{
+.bigger-input {
   width: 85%;
 }
 
-.bottom{
+.bottom {
   padding-top: 10px;
   padding-bottom: 10px;
 
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-color: #0CA7D3; */
   font-family: "Gill Sans", sans-serif;
 }
 
-
-
 table {
-  /* border: solid pink 1px; */
   border-radius: 3px;
   width: 80vw;
 }
 
 table tr th {
-  /* border: solid black 1px; */
-  background-color: #8EB1D8;
+  background-color: #8eb1d8;
   width: 400px;
-  /* color: black; */
   text-align: center;
-  /* display:  */
-  
 }
 
 table tr td {
-  /* border: solid black 1px; */
   color: black;
   text-align: center;
-
 }
 
-
 .slidecontainer {
-  width: 100%; /* Width of the outside container */
+  width: 100%;
 }
 
 .slidecontainer {
@@ -133,8 +100,8 @@ table tr td {
   background: #d3d3d3;
   outline: none;
   opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
 }
 
 .slider:hover {
@@ -149,13 +116,13 @@ table tr td {
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: #326CA6;
+  background: #326ca6;
 }
 
 .slider::-moz-range-thumb {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background: #326CA6;
+  background: #326ca6;
   cursor: pointer;
 }
