@@ -820,7 +820,7 @@ class App extends Component {
                 <th>Event</th>
                 <th>Split</th>
                 <th>Elapsed</th>
-                <th>Clock</th>
+                {/* <th>Clock</th> */}
               </tr>
               <tr className="row">
                 <td>Swim</td>
@@ -833,7 +833,7 @@ class App extends Component {
                   {this.state.swimOutputHours}:{this.state.swimOutputMinutes}:
                   {this.state.swimOutputSeconds}
                 </td>
-                <td />
+                {/* <td /> */}
               </tr>
               <tr className="row">
                 <td>T1</td>
@@ -846,7 +846,7 @@ class App extends Component {
                   {this.state.elapsedT1DisplayMinutes}:
                   {this.state.elapsedT1DisplaySeconds}
                 </td>
-                <td />
+                {/* <td /> */}
               </tr>
               <tr className="row">
                 <td>Bike</td>
@@ -860,7 +860,7 @@ class App extends Component {
                   {this.state.elapsedBikeDisplayMinutes}:
                   {this.state.elapsedBikeDisplaySeconds}
                 </td>
-                <td />
+                {/* <td /> */}
               </tr>
               <tr className="row">
                 <td>T2</td>
@@ -873,7 +873,7 @@ class App extends Component {
                   {this.state.elapsedT2DisplayMinutes}:
                   {this.state.elapsedT2DisplaySeconds}
                 </td>
-                <td />
+                {/* <td /> */}
               </tr>
               <tr className="row">
                 <td>Run</td>
@@ -887,7 +887,7 @@ class App extends Component {
                   {this.state.elapsedRunDisplayMinutes}:
                   {this.state.elapsedRunDisplaySeconds}
                 </td>
-                <td />
+                {/* <td /> */}
               </tr>
             </table>
           </div>
