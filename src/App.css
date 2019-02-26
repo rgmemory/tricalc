@@ -8,7 +8,6 @@
 }
 
 .top {
-  /* padding-top: 5px; */
   height: 53vh;
   display: flex;
   justify-content: center;
@@ -141,10 +140,5 @@ table tr td {
     height: 4px;
   }
 
-  
 
-  /* table tr th {
-    height: 600px;
-    background-color: red;
-  } */
 }
