@@ -81,6 +81,7 @@ table tr th {
 table tr td {
   color: black;
   text-align: center;
+  
 }
 
 .slidecontainer {
@@ -138,6 +139,15 @@ table tr td {
 
   .slider{
     height: 4px;
+  }
+
+  .input-name p{
+    font-size: 11px;
+  }
+
+  table tr td {
+    
+    font-size: 11px;
   }
 
 
